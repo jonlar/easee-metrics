@@ -1,0 +1,22 @@
+root: true
+env:
+  browser: true
+  es2021: true
+extends:
+  - eslint:recommended
+  - '@spotify/eslint-config-base'
+  - '@spotify/eslint-config-typescript'
+  - plugin:prettier/recommended
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+rules:
+  '@typescript-eslint/no-explicit-any': off
+  '@typescript-eslint/no-namespace': off
+  '@typescript-eslint/no-non-null-assertion': off
+  'new-cap': ['error', { capIsNew: false }] # due to Express naming
+  'no-console': off # fixme
+  'no-use-before-define': off # fixme
+  '@typescript-eslint/no-use-before-define': off # fixme
+ignorePatterns:
+  - dist

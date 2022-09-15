@@ -1,0 +1,37 @@
+{
+  "name": "easee-metrics",
+  "version": "0.0.1",
+  "description": "Provides selected metrics from an Easee Equalizer as a prometheus scrape endpoint",
+  "main": "src/index.ts",
+  "author": "Jonas Larsson",
+  "license": "MIT",
+  "devDependencies": {
+    "@spotify/eslint-config-base": "^15.0.0",
+    "@spotify/eslint-config-typescript": "^15.0.0",
+    "@spotify/prettier-config": "^15.0.0",
+    "@tsconfig/node18": "^18.2.2",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1"
+  },
+  "scripts": {
+    "lint": "yarn run eslint --fix",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "packageManager": "yarn@4.0.2"
+}
