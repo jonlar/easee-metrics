@@ -8,7 +8,7 @@ const Easee_UserAdministration_DTO_UserToken = z
   .object({
     accessToken: z.string().nullable(),
     expiresIn: z.number().int(),
-    accessClaims: z.array(z.string()).nullable(),
+    accessClaims: z.array(z.union([z.string(), z.unknown()])).nullable(),
     tokenType: z.string().nullable(),
     refreshToken: z.string().nullable(),
   })
@@ -3653,7 +3653,7 @@ device command`,
         schema: z.string().nullish(),
       },
     ],
-    response: z.instanceof(File),
+    response: z.string(),
   },
   {
     method: 'get',
