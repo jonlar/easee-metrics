@@ -1,4 +1,5 @@
 import { Easee } from './easee';
+import { EaseeStream } from './signalr';
 import { env } from 'process';
 
 async function main() {
@@ -8,6 +9,14 @@ async function main() {
   });
 
   await e.login();
+
+  const stream$ = EaseeStream(() => e.accessToken());
+  const subscription = stream$.subscribe({
+    next(x) {
+      console.log('Observed');
+      console.log(x);
+    },
+  });
 
   process.on('SIGINT', () => {
     console.log('Caught SIGINT, exiting');
