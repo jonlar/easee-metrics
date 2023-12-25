@@ -1,6 +1,8 @@
 import { Easee } from './easee';
 import { EaseeStream } from './signalr';
 import { env } from 'process';
+import { filter } from 'rxjs';
+import { EqualizerStreamData } from './signalr-types';
 
 async function main() {
   const e = new Easee({
@@ -11,10 +13,23 @@ async function main() {
   await e.login();
 
   const stream$ = EaseeStream(() => e.accessToken());
-  const subscription = stream$.subscribe({
-    next(x) {
-      console.log('Observed');
-      console.log(x);
+
+  type ValueInfo = { name: string; unit: string };
+
+  const valuesIdMap = new Map<number, ValueInfo>([
+    [EqualizerStreamData.state_currentL1, { name: 'L1', unit: 'A' }],
+    [EqualizerStreamData.state_currentL2, { name: 'L2', unit: 'A' }],
+    [EqualizerStreamData.state_currentL3, { name: 'L3', unit: 'A' }],
+    [EqualizerStreamData.state_activePowerImport, { name: 'ActivePowerImport', unit: 'kW' }],
+    [EqualizerStreamData.state_cumulativeActivePowerImport, { name: 'CumulativeActivePowerImport', unit: 'kWh' }],
+  ]);
+
+  stream$.pipe(filter(event => valuesIdMap.has(event.id))).subscribe({
+    next(event) {
+      const value: number = parseFloat(event.value);
+      const timestamp: Date = new Date(Date.parse(event.timestamp));
+      const info = valuesIdMap.get(event.id);
+      console.log(`${timestamp}: ${info?.name} ${value} ${info?.unit}`);
     },
   });
 
