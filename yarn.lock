@@ -639,7 +639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^20.10.5":
   version: 20.10.5
   resolution: "@types/node@npm:20.10.5"
   dependencies:
@@ -1385,6 +1385,7 @@ __metadata:
     "@spotify/prettier-config": "npm:^15.0.0"
     "@tsconfig/node18": "npm:^18.2.2"
     "@types/express": "npm:^4"
+    "@types/node": "npm:^20.10.5"
     "@typescript-eslint/eslint-plugin": "npm:^6.16.0"
     "@typescript-eslint/parser": "npm:^6.16.0"
     "@zodios/core": "npm:^10.9.6"
