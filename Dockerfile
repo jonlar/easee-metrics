@@ -11,4 +11,6 @@ RUN yarn build
 
 USER node
 
+EXPOSE 80
+
 ENTRYPOINT [ "node", "/app/build/index.js" ]
