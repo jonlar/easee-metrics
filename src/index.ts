@@ -67,7 +67,7 @@ async function main() {
     res.send(await registry.metrics());
   });
 
-  const server = app.listen(env.PORT ?? 80);
+  const server = app.listen(env.PORT ?? 8080);
 
   process.on('SIGINT', () => {
     console.log('Caught SIGINT, exiting');
