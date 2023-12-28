@@ -1,6 +1,6 @@
 {
   "name": "easee-metrics",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Provides selected metrics from an Easee Equalizer as a prometheus scrape endpoint",
   "main": "src/index.ts",
   "author": "Jonas Larsson",

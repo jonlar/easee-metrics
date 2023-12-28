@@ -57,7 +57,7 @@ async function main() {
     next(event) {
       const value = parseFloat(event.value);
       const info = valuesIdMap.get(event.id);
-      info?.metric.set(value);
+      info?.metric.set(value * (info.multiplier ?? 1));
     },
   });
 
