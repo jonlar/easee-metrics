@@ -7,8 +7,6 @@ import { Registry, Gauge } from 'prom-client';
 import express, { Request, Response } from 'express';
 
 async function main() {
-  const registry = new Registry();
-
   const e = new Easee({
     userName: env.EASEE_USERNAME,
     password: env.EASEE_PASSWORD,
@@ -51,6 +49,8 @@ async function main() {
     ],
   ]);
 
+  const registry = new Registry();
+  registry.setDefaultLabels({ equalizer: env.EASEE_EQUALIZER });
   valuesIdMap.forEach((value: ValueInfo) => registry.registerMetric(value.metric));
 
   stream$.pipe(filter(event => valuesIdMap.has(event.id))).subscribe({
