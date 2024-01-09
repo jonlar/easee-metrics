@@ -63,6 +63,13 @@ async function main() {
       },
     ],
     [
+      EqualizerStreamData.state_activePowerExport,
+      {
+        multiplier: 1000,
+        metric: new Gauge({ name: 'easee_active_power_export_watts', help: 'Exported active power' }),
+      },
+    ],
+    [
       EqualizerStreamData.state_cumulativeActivePowerImport,
       {
         metric: new Gauge({
