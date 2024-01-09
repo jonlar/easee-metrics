@@ -3,7 +3,7 @@ import { EaseeStream } from './signalr';
 import { env } from 'process';
 import { filter } from 'rxjs';
 import { EqualizerStreamData } from './signalr-types';
-import { Registry, Gauge } from 'prom-client';
+import { Registry, Gauge, collectDefaultMetrics } from 'prom-client';
 import express, { Request, Response } from 'express';
 
 async function main() {
@@ -49,9 +49,11 @@ async function main() {
     ],
   ]);
 
-  const registry = new Registry();
-  registry.setDefaultLabels({ equalizer: env.EASEE_EQUALIZER });
-  valuesIdMap.forEach((value: ValueInfo) => registry.registerMetric(value.metric));
+  const register = new Registry();
+  collectDefaultMetrics({ register });
+
+  register.setDefaultLabels({ equalizer: env.EASEE_EQUALIZER });
+  valuesIdMap.forEach((value: ValueInfo) => register.registerMetric(value.metric));
 
   stream$.pipe(filter(event => valuesIdMap.has(event.id))).subscribe({
     next(event) {
@@ -63,8 +65,8 @@ async function main() {
 
   const app = express();
   app.get('/metrics', async (_req: Request, res: Response) => {
-    res.set('Content-type', registry.contentType);
-    res.send(await registry.metrics());
+    res.set('Content-type', register.contentType);
+    res.send(await register.metrics());
   });
 
   const server = app.listen(env.PORT ?? 8080);
