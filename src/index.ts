@@ -87,6 +87,38 @@ async function main() {
         }),
       },
     ],
+    [
+      EqualizerStreamData.state_reactivePowerImport,
+      {
+        multiplier: 1000,
+        metric: new Gauge({ name: 'easee_reactive_power_import_watts', help: 'Imported reactive power' }),
+      },
+    ],
+    [
+      EqualizerStreamData.state_reactivePowerExport,
+      {
+        multiplier: 1000,
+        metric: new Gauge({ name: 'easee_reactive_power_export_watts', help: 'Exported reactive power' }),
+      },
+    ],
+    [
+      EqualizerStreamData.state_cumulativeReactivePowerImport,
+      {
+        metric: new Gauge({
+          name: 'easee_cumulative_reactive_power_import_kilowatts',
+          help: 'Cumulative imported reactive power',
+        }),
+      },
+    ],
+    [
+      EqualizerStreamData.state_cumulativeReactivePowerExport,
+      {
+        metric: new Gauge({
+          name: 'easee_cumulative_reactive_power_export_kilowatts',
+          help: 'Cumulative exported reactive power',
+        }),
+      },
+    ],
   ]);
 
   const register = new Registry();
