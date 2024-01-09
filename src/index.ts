@@ -78,6 +78,15 @@ async function main() {
         }),
       },
     ],
+    [
+      EqualizerStreamData.state_cumulativeActivePowerExport,
+      {
+        metric: new Gauge({
+          name: 'easee_cumulative_active_power_export_kilowatts',
+          help: 'Cumulative exported active power',
+        }),
+      },
+    ],
   ]);
 
   const register = new Registry();
