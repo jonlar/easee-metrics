@@ -32,6 +32,30 @@ async function main() {
       { metric: new Gauge({ name: 'easee_current_L3_amperes', help: 'Imported current on L3' }) },
     ],
     [
+      EqualizerStreamData.state_voltageNL1,
+      { metric: new Gauge({ name: 'easee_voltage_L1_N_volt', help: 'Voltage L1 to N' }) },
+    ],
+    [
+      EqualizerStreamData.state_voltageNL2,
+      { metric: new Gauge({ name: 'easee_voltage_L2_N_volt', help: 'Voltage L2 to N' }) },
+    ],
+    [
+      EqualizerStreamData.state_voltageNL3,
+      { metric: new Gauge({ name: 'easee_voltage_L3_N_volt', help: 'Voltage L3 to N' }) },
+    ],
+    [
+      EqualizerStreamData.state_voltageL1L2,
+      { metric: new Gauge({ name: 'easee_voltage_L1_L2_volt', help: 'Voltage L1 to L2' }) },
+    ],
+    [
+      EqualizerStreamData.state_voltageL1L3,
+      { metric: new Gauge({ name: 'easee_voltage_L1_L3_volt', help: 'Voltage L1 to L3' }) },
+    ],
+    [
+      EqualizerStreamData.state_voltageL2L3,
+      { metric: new Gauge({ name: 'easee_voltage_L2_L3_volt', help: 'Voltage L2 to L3' }) },
+    ],
+    [
       EqualizerStreamData.state_activePowerImport,
       {
         multiplier: 1000,
