@@ -42,7 +42,7 @@ export class Easee {
       );
     }, refreshAt.milliseconds);
 
-    console.log(`Logged in, expires in ´${expiresIn}, refresh in ${refreshAt}`);
+    console.log(`Session refreshed, expires in ´${expiresIn}`);
   }
 
   async login() {
@@ -63,6 +63,7 @@ export class Easee {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
     }
+    console.log('Logged out');
   }
 
   async showInfo() {
