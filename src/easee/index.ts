@@ -55,7 +55,6 @@ export class Easee {
 
     const profileInfo = await easeeApi.getApiaccountsprofile();
     this.userId = profileInfo.userId;
-    console.log(profileInfo);
 
     console.log(`Logged in as user id ${this.userId}`);
   }
