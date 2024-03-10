@@ -1,6 +1,8 @@
 import { Duration } from 'ts-duration';
 import { api as easeeApi } from './api';
+import logger from '../logging';
 
+const log = logger.child({ task: 'auth' });
 interface EaseeProps {
   userName: string | undefined;
   password: string | undefined;
@@ -42,7 +44,7 @@ export class Easee {
       );
     }, refreshAt.milliseconds);
 
-    console.log(`Session refreshed, expires in ´${expiresIn}`);
+    log.info(`Session refreshed, expires in ´${expiresIn}`);
   }
 
   async login() {
@@ -56,19 +58,19 @@ export class Easee {
     const profileInfo = await easeeApi.getApiaccountsprofile();
     this.userId = profileInfo.userId;
 
-    console.log(`Logged in as user id ${this.userId}`);
+    log.info(`Logged in as user id ${this.userId}`);
   }
 
   logout() {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
     }
-    console.log('Logged out');
+    log.info('Logged out');
   }
 
   async showInfo() {
     const profileInfo = await easeeApi.getApiaccountsprofile();
-    console.log(profileInfo);
+    log.info(profileInfo);
   }
 
   accessToken = () => {
