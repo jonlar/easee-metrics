@@ -5,6 +5,9 @@ import { filter } from 'rxjs';
 import { EqualizerStreamData } from './signalr-types';
 import { Registry, Gauge, collectDefaultMetrics } from 'prom-client';
 import express, { Request, Response } from 'express';
+import logger from './logging';
+
+const log = logger.child({ task: 'main' });
 
 async function main() {
   const e = new Easee({
@@ -141,10 +144,12 @@ async function main() {
     res.send(await register.metrics());
   });
 
-  const server = app.listen(env.PORT ?? 8080);
+  const port = env.PORT ?? 8080;
+  const server = app.listen(port);
+  log.info(`Listening on port ${port}`);
 
   process.on('SIGINT', () => {
-    console.log('Caught SIGINT, exiting');
+    log.info('Caught SIGINT, exiting');
     e.logout();
     server.close();
     process.exit(0);

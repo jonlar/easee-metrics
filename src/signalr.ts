@@ -5,6 +5,10 @@ import { env } from 'process';
 
 import { DatatypesStreamData, EqualizerStreamData } from './signalr-types';
 
+import logger from './logging';
+
+const log = logger.child({ task: 'signalr' });
+
 const dataSchema = z.object({
   mid: z.string(),
   dataType: z.nativeEnum(DatatypesStreamData),
@@ -24,7 +28,7 @@ export const EaseeStream = (accessTokenFactory: () => string | Promise<string>) 
     connection.on('ProductUpdate', data => {
       const parsed = dataSchema.safeParse(data);
       if (parsed.success) {
-        // console.log(JSON.stringify({ id: EqualizerStreamData[parsed.data.id], value: parsed.data.value }));
+        log.debug(JSON.stringify({ id: EqualizerStreamData[parsed.data.id], value: parsed.data.value }));
         subscriber.next(parsed.data);
       }
     });
@@ -37,10 +41,10 @@ export const EaseeStream = (accessTokenFactory: () => string | Promise<string>) 
       connection
         .send('SubscribeWithCurrentState', env.EASEE_EQUALIZER, true)
         .then(() => {
-          console.log('Connected');
+          log.info('Connected');
         })
         .catch(() => {
-          console.log('Error connecting');
+          log.error('Error connecting');
         });
     });
   });
