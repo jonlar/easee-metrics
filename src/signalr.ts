@@ -22,7 +22,6 @@ export const EaseeStream = (accessTokenFactory: () => string | Promise<string>) 
   new Observable<dataType>((subscriber: Subscriber<dataType>) => {
     const connection = new HubConnectionBuilder()
       .withUrl('https://streams.easee.com/hubs/chargers', { accessTokenFactory })
-      .withStatefulReconnect()
       .build();
 
     connection.on('ProductUpdate', data => {
