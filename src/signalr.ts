@@ -22,6 +22,7 @@ export const EaseeStream = (accessTokenFactory: () => string | Promise<string>) 
   new Observable<dataType>((subscriber: Subscriber<dataType>) => {
     const connection = new HubConnectionBuilder()
       .withUrl('https://streams.easee.com/hubs/chargers', { accessTokenFactory })
+      .withStatefulReconnect()
       .build();
 
     connection.on('ProductUpdate', data => {
@@ -30,6 +31,10 @@ export const EaseeStream = (accessTokenFactory: () => string | Promise<string>) 
         log.debug(JSON.stringify({ id: EqualizerStreamData[parsed.data.id], value: parsed.data.value }));
         subscriber.next(parsed.data);
       }
+    });
+
+    connection.onreconnecting((error?: Error) => {
+      throw new Error(`Connection reconnecting - ${error}`);
     });
 
     connection.onclose((error?: Error) => {
